@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Leaderboard
+{% endblock %}
+
+{% block main %}
+<div id="visit-streak-container" style="margin-top: 50px; text-align: center; padding: 20px;">
+    <h1 style="font-size: 3rem; color: #ffed86; text-shadow: 2px 2px 8px #000;">
+        Your Amazing Streak Journey for the day
+    </h1>
+    <p style="font-size: 1.2rem; color: #2193b0; max-width: 700px; margin: 20px auto; line-height: 1.6;">
+        Keep pushing your limits every day! Each visit counts toward building a streak of consistency and greatness.
+        You're on your way to achieving something truly <span style="color: #2193b0; font-weight: bold;">incredible</span>!
+    </p>
+
+    <div id="visit-streak"
+         style="background: linear-gradient(135deg, #6dd5ed, #2193b0);
+                padding: 30px 50px;
+                border-radius: 15px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                font-size: 2rem;
+                color: #ffffff;
+                font-weight: bold;
+                text-shadow: 1px 1px 5px #000;">
+        Loading your visit streak...
+    </div>
+
+    <p id="motivational-message"
+       style="margin-top: 20px;
+              font-size: 1.5rem;
+              color: #ffed86;
+              text-shadow: 1px 1px 6px #000;">
+        You are unstoppable. Keep up the phenomenal work!
+    </p>
+</div>
+
+<script>
+    function formatDate(date) {
+        return date.toISOString().split("T")[0];
+    }
+
+    function trackVisitStreak() {
+        const today = formatDate(new Date());
+        const lastVisit = localStorage.getItem("lastVisitDate");
+        let streak = parseInt(localStorage.getItem("visitStreak")) || 0;
+
+        if (lastVisit) {
+            const lastVisitDate = new Date(lastVisit);
+            const diffInDays = (new Date(today) - lastVisitDate) / (1000 * 60 * 60 * 24);
+
+            if (diffInDays === 1) {
+                streak += 1;
+                localStorage.setItem("visitStreak", streak);
+            } else if (diffInDays > 1) {
+                streak = 1;
+                localStorage.setItem("visitStreak", streak);
+            }
+        } else {
+            streak = 1;
+            localStorage.setItem("visitStreak", streak);
+        }
+
+        localStorage.setItem("lastVisitDate", today);
+
+        const streakDisplay = document.getElementById("visit-streak");
+        const motivationalMessage = document.getElementById("motivational-message");
+
+        if (streakDisplay) {
+            streakDisplay.textContent = `Your current visit streak: ${streak} incredible day${streak > 1 ? 's' : ''}!`;
+        }
+
+        if (motivationalMessage) {
+            if (streak >= 7) {
+                motivationalMessage.textContent = "You're building a habit of success! Keep it up!";
+            } else if (streak >= 14) {
+                motivationalMessage.textContent = "You're unstoppable! A true champion of consistency!";
+            } else if (streak >= 30) {
+                motivationalMessage.textContent = "You're a legend! Your dedication is unbelievable!";
+            }
+        }
+    }
+
+    trackVisitStreak();
+</script>
+{% endblock %}

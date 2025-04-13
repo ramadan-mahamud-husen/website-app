@@ -1,0 +1,528 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div class="login-container">
+        <div class="login-wrapper">
+            <!-- Background Animation -->
+            <div class="login-bg-animation">
+                <div class="bg-circle bg-circle-1"></div>
+                <div class="bg-circle bg-circle-2"></div>
+                <div class="bg-circle bg-circle-3"></div>
+                <div class="bg-circle bg-circle-4"></div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="login-content">
+                <div class="login-header">
+                    <h1>Create Your Account</h1>
+                    <p>Join us to get started</p>
+                </div>
+
+                <div class="login-options">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <!-- Registration Form -->
+                    <div class="login-card email-login">
+                        <div class="card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <line x1="20" y1="8" x2="20" y2="14"></line>
+                                <line x1="23" y1="11" x2="17" y2="11"></line>
+                            </svg>
+                        </div>
+                        <h3>Register with Email</h3>
+                        <form id="registerForm" action="/register" method="POST">
+                            <div class="form-group floating">
+                                <input name="email" id="email" type="email"
+                                       class="{% if 'email' in form_errors %}is-invalid{% endif %}"
+                                       value="{{ form_data.email if form_data }}" required>
+                                <label for="email">Email Address</label>
+                                <div class="underline"></div>
+                                {% if 'email' in form_errors %}
+                                    <div class="invalid-feedback">Please enter a valid email</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group floating">
+                                <input name="password" id="password" type="password"
+                                       class="{% if 'password' in form_errors %}is-invalid{% endif %}" required>
+                                <label for="password">Password</label>
+                                <div class="underline"></div>
+                                {% if 'password' in form_errors %}
+                                    <div class="invalid-feedback">Password must meet all requirements</div>
+                                {% endif %}
+                            </div>
+                            <div class="password-requirements">
+                                <small class="form-text text-muted">Password must contain:</small>
+                                <ul class="list-unstyled">
+                                    <li class="req-item" id="length"><i class="fas fa-circle"></i> At least 8 characters</li>
+                                    <li class="req-item" id="uppercase"><i class="fas fa-circle"></i> One uppercase letter</li>
+                                    <li class="req-item" id="lowercase"><i class="fas fa-circle"></i> One lowercase letter</li>
+                                    <li class="req-item" id="number"><i class="fas fa-circle"></i> One number</li>
+                                    <li class="req-item" id="special"><i class="fas fa-circle"></i> One special character (@$!%*?&)</li>
+                                </ul>
+                            </div>
+
+                            <div class="form-group floating">
+                                <input name="confirmation" id="confirmation" type="password" required>
+                                <label for="confirmation">Confirm Password</label>
+                                <div class="underline"></div>
+                                <div id="passwordMatch" class="invalid-feedback">Passwords do not match</div>
+                            </div>
+
+                            <div class="form-group floating">
+                                <input name="First_name" id="First_name" type="text"
+                                       class="{% if 'First_name' in form_errors %}is-invalid{% endif %}"
+                                       value="{{ form_data.First_name if form_data }}" required>
+                                <label for="First_name">First Name</label>
+                                <div class="underline"></div>
+                                {% if 'First_name' in form_errors %}
+                                    <div class="invalid-feedback">Name must be at least 2 letters</div>
+                                {% endif %}
+                            </div>
+
+                            <button type="submit" class="btn-login">
+                                <span>Register</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="login-footer">
+                        <p>Already have an account? <a href="/login">Sign in</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* All the CSS from the login page remains the same */
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --dark-color: #1e1e24;
+            --light-color: #f8f9fa;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+            --warning-color: #f8961e;
+            --info-color: #43aa8b;
+            --text-color: #2b2d42;
+            --text-light: #8d99ae;
+            --white: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            background-color: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-bg-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color), var(--success-color));
+            opacity: 0.1;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .bg-circle-1 {
+            width: 300px;
+            height: 300px;
+            top: -50px;
+            left: -50px;
+            animation-delay: 0s;
+        }
+
+        .bg-circle-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -30px;
+            right: -30px;
+            animation-delay: 2s;
+            background: linear-gradient(135deg, var(--danger-color), var(--warning-color));
+        }
+
+        .bg-circle-3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 30%;
+            animation-delay: 4s;
+            background: linear-gradient(135deg, var(--info-color), var(--secondary-color));
+        }
+
+        .bg-circle-4 {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            right: 20%;
+            animation-delay: 6s;
+            background: linear-gradient(135deg, var(--warning-color), var(--danger-color));
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .login-content {
+            width: 100%;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .login-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary-color), var(--danger-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .login-options {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .login-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        }
+
+        .email-login::before {
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            margin: 0 auto 25px;
+        }
+
+        .login-card h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .login-card p {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group.floating input {
+            width: 100%;
+            padding: 15px 0 5px 0;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            font-size: 1rem;
+            background-color: transparent;
+            transition: var(--transition);
+        }
+
+        .form-group.floating input:focus {
+            outline: none;
+            border-bottom-color: var(--primary-color);
+        }
+
+        .form-group.floating label {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            color: var(--text-light);
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .form-group.floating input:focus + label,
+        .form-group.floating input:not(:placeholder-shown) + label {
+            top: 0;
+            font-size: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        .form-group.floating .underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .form-group.floating input:focus ~ .underline {
+            width: 100%;
+        }
+
+        .password-requirements {
+            margin: -15px 0 20px;
+            padding: 10px 15px;
+            background-color: rgba(248, 249, 250, 0.7);
+            border-radius: 8px;
+        }
+
+        .password-requirements small {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .req-item {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+        }
+
+        .req-item i {
+            font-size: 0.4rem;
+            margin-right: 8px;
+            color: var(--text-light);
+        }
+
+        .req-item.valid i {
+            color: var(--success-color);
+        }
+
+        .req-item.valid {
+            color: var(--success-color);
+        }
+
+        .invalid-feedback {
+            color: var(--danger-color);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .is-invalid {
+            border-bottom-color: var(--danger-color) !important;
+        }
+
+        .is-invalid ~ .underline {
+            background-color: var(--danger-color) !important;
+        }
+
+        .btn-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .btn-login svg {
+            margin-left: 10px;
+            transition: var(--transition);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-login:hover svg {
+            transform: translateX(5px);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-light);
+        }
+
+        .login-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .login-content {
+                padding: 40px 20px;
+            }
+
+            .login-card {
+                padding: 30px 20px;
+            }
+
+            .login-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const password = document.getElementById('password');
+            const confirmation = document.getElementById('confirmation');
+            const form = document.getElementById('registerForm');
+
+            // Real-time password validation
+            password.addEventListener('input', function() {
+                const value = this.value;
+
+                // Check requirements
+                document.getElementById('length').classList.toggle('valid', value.length >= 8);
+                document.getElementById('uppercase').classList.toggle('valid', /[A-Z]/.test(value));
+                document.getElementById('lowercase').classList.toggle('valid', /[a-z]/.test(value));
+                document.getElementById('number').classList.toggle('valid', /\d/.test(value));
+                document.getElementById('special').classList.toggle('valid', /[@$!%*?&]/.test(value));
+            });
+
+            // Password match validation
+            confirmation.addEventListener('input', function() {
+                if (password.value !== this.value) {
+                    this.classList.add('is-invalid');
+                    document.getElementById('passwordMatch').style.display = 'block';
+                } else {
+                    this.classList.remove('is-invalid');
+                    document.getElementById('passwordMatch').style.display = 'none';
+                }
+            });
+
+            // Form submission validation
+            form.addEventListener('submit', function(e) {
+                if (password.value !== confirmation.value) {
+                    e.preventDefault();
+                    confirmation.classList.add('is-invalid');
+                    document.getElementById('passwordMatch').style.display = 'block';
+                    confirmation.focus();
+                }
+            });
+        });
+    </script>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Quizzes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #ffed86;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        a {
+            display: block;
+            background: #ffffff;
+            color: #2193b0;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        a:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            font-size: 1rem;
+            color: #ffffff;
+            text-decoration: underline;
+            opacity: 0.9;
+        }
+
+        .back-link a:hover {
+            opacity: 1;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #ffed86;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Take Quizzes</h1>
+
+        {% if subjects %}
+            <!-- Subject List -->
+            <h2>Select a Subject</h2>
+            <ul>
+                {% for subject in subjects.keys() %}
+                <li>
+                    <a href="{{ url_for('take_quizzes', subject=subject) }}">{{ subject }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% elif units %}
+            <!-- Unit List -->
+            <h2>{{ subject }} Units</h2>
+            <ul>
+                {% for unit in units %}
+                <li>
+                    <a href="{{ unit.test_link }}" target="_blank">{{ unit.unit }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="back-link">
+                <a href="{{ url_for('take_quizzes') }}">← Back to Subjects</a>
+            </div>
+        {% else %}
+            <p>No subjects or units available.</p>
+        {% endif %}
+    </div>
+
+    <footer>
+        Empowering students to learn and grow with free resources.
+    </footer>
+</body>
+</html>

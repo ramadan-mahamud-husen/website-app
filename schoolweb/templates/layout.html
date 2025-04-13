@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Quran Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet">
+    <link rel="icon" href="/static/download.png" width="32" heigh="32">
+
+    <style>
+        :root {
+            --islamic-green: #006d32;
+            --gold: #d4af37;
+            --light-beige: #f5f5dc;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+
+        .arabic-font {
+            font-family: 'Scheherazade New', serif;
+            font-size: 1.5rem;
+        }
+
+        .quran-font {
+            font-family: 'Amiri Quran', serif;
+            font-size: 1.8rem;
+            line-height: 2.5;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1560303255-f5a5a5393f18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--islamic-green);
+        }
+
+        footer {
+            background-color: var(--islamic-green);
+            color: white;
+        }
+
+        .daily-verse {
+            background-color: var(--light-beige);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-right: 5px solid var(--gold);
+        }
+
+        .verse-translation {
+            font-style: italic;
+            color: #555;
+            border-left: 3px solid var(--islamic-green);
+            padding-left: 15px;
+        }
+
+        .verse-reference {
+            color: var(--islamic-green);
+            font-weight: 600;
+        }
+
+        .islamic-pattern-bg {
+            background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');
+            background-repeat: repeat;
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .btn-islamic {
+            background-color: var(--islamic-green);
+            color: white;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-islamic:hover {
+            background-color: #005a2a;
+            color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .card-hover-effect:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .active.nav-link::after {
+            width: 100%;
+        }
+    </style>
+
+    <title>AL-FALAH ISLAMIC SCHOOL: {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <div class="islamic-pattern-bg"></div>
+
+    <!-- Enhanced Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top shadow">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <i class="fas fa-mosque me-2"></i>
+                <span>AL-FALAH</span>
+                <span class="text-warning">_ISLAMIC_SCHOOL</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar">
+                {% if session["user_id"] %}
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/dashboard">
+                                <i class="fas fa-tachometer-alt me-1"></i>Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/ideas">
+                                <i class="fas fa-lightbulb me-1"></i>Share Ideas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/take-quizzes">
+                                <i class="fas fa-question-circle me-1"></i>Quizzes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/leaderboard">
+                                <i class="fas fa-trophy me-1"></i>Leaderboard
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="btn btn-outline-light" href="/logout">
+                                <i class="fas fa-sign-out-alt me-1"></i>Log Out
+                            </a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="btn btn-warning me-2" href="/register">
+                                <i class="fas fa-user-plus me-1"></i>Register
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-light" href="/login">
+                                <i class="fas fa-sign-in-alt me-1"></i>Sign In
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section (only on homepage) -->
+    {% if request.path == '/' %}
+    <section class="hero-section text-center">
+        <div class="container py-5">
+            <h1 class="display-4 fw-bold mb-4">Welcome to Al-Falah Islamic School</h1>
+            <p class="lead mb-4 arabic-font">بسم الله الرحمن الرحيم</p>
+            <p class="lead mb-5">Combining traditional Islamic values with modern education</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="/register" class="btn btn-warning btn-lg px-4">Enroll Now</a>
+                <a href="/login" class="btn btn-outline-light btn-lg px-4">Learn More</a>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Daily Quran Verse Section -->
+    {% if request.path == '/' or request.path == '/dashboard' %}
+    <div class="container">
+        <div class="daily-verse">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <p class="quran-font">وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ الدَّاعِ إِذَا دَعَانِ ۖ فَلْيَسْتَجِيبُوا لِي وَلْيُؤْمِنُوا بِي لَعَلَّهُمْ يَرْشُدُونَ</p>
+                    <p class="verse-translation">"And when My servants ask you concerning Me, indeed I am near. I respond to the invocation of the supplicant when he calls upon Me. So let them respond to Me [by obedience] and believe in Me that they may be [rightly] guided."</p>
+                    <p class="verse-reference text-end">- Surah Al-Baqarah (2:186)</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-quran" style="font-size: 5rem; color: var(--gold);"></i>
+                    <p class="mt-3">Daily Quran Verse</p>
+                    <a href="https://quran.com" target="_blank" class="btn btn-islamic">Read More Verses</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Flash Messages -->
+    {% if get_flashed_messages() %}
+        <div class="container mt-3">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                {{ get_flashed_messages() | join(" ") }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        {% block main %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-warning">Al-Falah Islamic School</h5>
+                    <p>Providing quality Islamic education since 1947</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/dashboard" class="text-white"><i class="fas fa-info-circle me-2"></i>About Us</a></li>
+                        <li class="mb-2"><a href="/take-quizzes" class="text-white"><i class="fas fa-book me-2"></i>Curriculum</a></li>
+                        <li class="mb-2">
+                            <a href="mailto:alfalahislamicschool3376@gmail.com?subject=Inquiry%20from%20Website&body=Assalamu%20Alaikum%20Al-Falah%20Islamic%20School,%0D%0A%0D%0AI%20would%20like%20to%20inquire%20about..."
+                               class="text-white">
+                                <i class="fas fa-envelope me-2"></i>Email Us
+                            </a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="https://youtube.com/@alfalahislamicschool3376?si=iXGocQRlUuZKM8re"
+                               target="_blank"
+                               class="text-white">
+                                <i class="fab fa-youtube me-2"></i>YouTube Channel
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i>Dire Dawa, 07, AL Falah islamic school</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i>youtube.com/@alfalahislamic</li>
+                        <li class="mb-2"><i class="fas fa-praying-hands me-2"></i> Prayer Times</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 bg-light">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 Al-Falah Islamic School. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Enable tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        // Function to change daily verse (would be connected to backend in real implementation)
+        function changeDailyVerse() {
+            const verses = [
+                {
+                    arabic: "يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ",
+                    translation: "O you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient.",
+                    reference: "Surah Al-Baqarah (2:153)"
+                },
+                {
+                    arabic: "وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ",
+                    translation: "And whoever fears Allah - He will make for him a way out and will provide for him from where he does not expect.",
+                    reference: "Surah At-Talaq (65:2-3)"
+                },
+                {
+                    arabic: "إِنَّ مَعَ الْعُسْرِ يُسْرًا",
+                    translation: "Indeed, with hardship [will be] ease.",
+                    reference: "Surah Ash-Sharh (94:6)"
+                }
+            ];
+
+            const randomVerse = verses[Math.floor(Math.random() * verses.length)];
+            document.querySelector('.quran-font').textContent = randomVerse.arabic;
+            document.querySelector('.verse-translation').textContent = `"${randomVerse.translation}"`;
+            document.querySelector('.verse-reference').textContent = `- ${randomVerse.reference}`;
+        }
+
+        // Change verse every day (in a real app, this would be handled server-side)
+        // For demo purposes, we'll change it every 10 seconds
+        setInterval(changeDailyVerse, 10000);
+    </script>
+</body>
+</html>
