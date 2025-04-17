@@ -17,7 +17,16 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///users.db")
+from urllib.parse import urlparse
+
+# For Render PostgreSQL
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    parsed = urlparse(DATABASE_URL)
+    db = SQL(f"postgresql://{parsed.username}:{parsed.password}@{parsed.hostname}:{parsed.port}{parsed.path}")
+else:
+    # Local development fallback
+    db = SQL("sqlite:///users.db")
 
 # Security configurations
 app.secret_key = os.urandom(24)
